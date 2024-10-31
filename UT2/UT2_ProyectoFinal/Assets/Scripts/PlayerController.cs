@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,11 +15,13 @@ public class PlayerController : MonoBehaviour
     public float fallMultiplier;
     public float lowJumpMultiplier;
     Animator animator;
+    UnityEvent loadNewScene;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        loadNewScene = new UnityEvent();
     }
 
     void Update()
@@ -94,6 +98,21 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("enMovimiento", false);
         }
+    }
+
+    // Método que si tocas el objeto Collider2D saldrá la animación de muerte.
+    void OnTriggerEnter2D(Collider2D other) {
+        
+        if(other.gameObject.CompareTag("Vacio_Muerte")){
+            
+            animator.SetTrigger("Robot1_Dead");
+        }
+    }
+
+    // Método que te carga la escena /muerte.
+    void ldScene(){
+
+        loadNewScene.Invoke();
     }
 
     // Método para visualizar el Raycast en la escena.
