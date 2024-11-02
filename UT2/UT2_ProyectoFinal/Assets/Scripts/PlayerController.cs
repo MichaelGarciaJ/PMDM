@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,13 +16,12 @@ public class PlayerController : MonoBehaviour
     public float fallMultiplier;
     public float lowJumpMultiplier;
     Animator animator;
-    UnityEvent loadNewScene;
+    public UnityEvent loadNewScene;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        loadNewScene = new UnityEvent();
     }
 
     void Update()
@@ -42,22 +42,23 @@ public class PlayerController : MonoBehaviour
 
         //Se encarga de gestionar el giro del jugador.
         gestionarGiro(inputMovimiento);
-        rb.velocity = new Vector2(inputMovimiento * velocidad, rb.velocity.y);
 
         //Se encarga de gestionar si el jugador esta quieto o no.
         gestionarMovimiento(inputMovimiento);
-        rb.velocity = new Vector2(inputMovimiento * velocidad, rb.velocity.y);
+
     }
 
-    // Método en el que se encarga en el salto del jugador, también tenemos en cuenta la gravedad. 
+    // Método en el que se encarga en el salto del jugador y su animación, también tenemos en cuenta la gravedad. 
     //En nuestro caso lo vamos a hacer con Raycast.
     void procesarSalto()
     {
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayLenght, groundLayer);
 
         if (Input.GetKeyDown(KeyCode.Space) && hit.collider != null)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            animator.SetBool("isGrounded", false); // Activa la animación de salto
         }
 
         if (rb.velocity.y < 0) // Se encarga de aumentar la gravedad cuando el jugador esta cayendo.
@@ -68,6 +69,13 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
+
+        // Si el Raycast detecta el suelo, indica que ha aterrizado
+        if (hit.collider != null && rb.velocity.y <= 0)
+        {
+            animator.SetBool("isGrounded", true); // Desactiva la animación de salto al tocar el suelo
+        }
+
     }
 
     // Método en el que gestionamos el giro del jugador.
@@ -88,8 +96,6 @@ public class PlayerController : MonoBehaviour
     void gestionarMovimiento(float inputMovimiento)
     {
 
-        rb.velocity = new Vector2(inputMovimiento * velocidad, rb.velocity.y);
-
         if (inputMovimiento != 0) // Está en movimiento.
         {
             animator.SetBool("enMovimiento", true);
@@ -98,19 +104,23 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("enMovimiento", false);
         }
+
     }
 
     // Método que si tocas el objeto Collider2D saldrá la animación de muerte.
-    void OnTriggerEnter2D(Collider2D other) {
-        
-        if(other.gameObject.CompareTag("Vacio_Muerte")){
-            
+    void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.gameObject.CompareTag("Vacio_Muerte"))
+        {
+
             animator.SetTrigger("Robot1_Dead");
         }
     }
 
-    // Método que te carga la escena /muerte.
-    void ldScene(){
+    // Método que te carga la escena / muerte.
+    public void ldScene()
+    {
 
         loadNewScene.Invoke();
     }

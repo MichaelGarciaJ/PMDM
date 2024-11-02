@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
    
-   void loadScene(string nameScene)
+   // Método que te carga la escena que indiques.
+   public void cargarScena(string nameScene)
    {
     SceneManager.LoadScene(nameScene);
    }
