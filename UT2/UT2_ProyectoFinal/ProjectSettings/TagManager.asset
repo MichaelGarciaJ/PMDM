@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Vacio_Muerte
+  - Enemigo
+  - Arbusto
+  - Corazon
   layers:
   - Default
   - TransparentFX

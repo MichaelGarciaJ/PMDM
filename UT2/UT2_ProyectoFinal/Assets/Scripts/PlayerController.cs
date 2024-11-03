@@ -17,20 +17,28 @@ public class PlayerController : MonoBehaviour
     public float lowJumpMultiplier;
     Animator animator;
     public UnityEvent loadNewScene;
+    private bool puedeMoverse = true;
+    public bool isGrounded { get; private set; }
+    public bool isRunning { get; private set; }
+    private float velocidadOriginal;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        velocidadOriginal = velocidad;
     }
 
     void Update()
     {
-        // Se encarga el movimiento de derecha a izquierda. 
-        procesarMovimiento_Giro_Animacion();
+        if (puedeMoverse)
+        {
+            // Se encarga el movimiento de derecha a izquierda. 
+            procesarMovimiento_Giro_Animacion();
 
-        // Se encarga el movimiento del salto.
-        procesarSalto();
+            // Se encarga el movimiento del salto.
+            procesarSalto();
+        }
 
     }
 
@@ -45,7 +53,6 @@ public class PlayerController : MonoBehaviour
 
         //Se encarga de gestionar si el jugador esta quieto o no.
         gestionarMovimiento(inputMovimiento);
-
     }
 
     // Método en el que se encarga en el salto del jugador y su animación, también tenemos en cuenta la gravedad. 
@@ -59,6 +66,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             animator.SetBool("isGrounded", false); // Activa la animación de salto
+            isGrounded = false;
         }
 
         if (rb.velocity.y < 0) // Se encarga de aumentar la gravedad cuando el jugador esta cayendo.
@@ -74,21 +82,22 @@ public class PlayerController : MonoBehaviour
         if (hit.collider != null && rb.velocity.y <= 0)
         {
             animator.SetBool("isGrounded", true); // Desactiva la animación de salto al tocar el suelo
+            isGrounded = true;
         }
 
     }
 
-    // Método en el que gestionamos el giro del jugador.
+    // Método en el que gestionamos el giro del jugador con sus objetos que tenga.
     void gestionarGiro(float inputMovimiento)
     {
 
         if (inputMovimiento > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.eulerAngles = new Vector3(1, 1, 1);
         }
         else if (inputMovimiento < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
 
@@ -99,15 +108,36 @@ public class PlayerController : MonoBehaviour
         if (inputMovimiento != 0) // Está en movimiento.
         {
             animator.SetBool("enMovimiento", true);
+            isRunning = false;
         }
         else // Este caso sale cuando el jugaor esta quieto.
         {
             animator.SetBool("enMovimiento", false);
+            isRunning = true;
         }
 
     }
 
+    // Método que desactiva el movimiento por una cantidad de tiempo.
+    public void desactivarMovimiento(float duration)
+    {
+
+        StartCoroutine(disableMovementCoroutine(duration));
+    }
+
+    // Método que corutina para desativar el movimiento y volverlo a habilitarlo.
+    public IEnumerator disableMovementCoroutine(float duration)
+    {
+
+        puedeMoverse = false;
+
+        // Espeara el tiempo del knockback
+        yield return new WaitForSeconds(duration);
+        puedeMoverse = true;
+    }
+
     // Método que si tocas el objeto Collider2D saldrá la animación de muerte.
+    // Tambíen si toca el arbutos el jugador ira más lento.
     void OnTriggerEnter2D(Collider2D other)
     {
 
@@ -115,6 +145,23 @@ public class PlayerController : MonoBehaviour
         {
 
             animator.SetTrigger("Robot1_Dead");
+        }
+
+
+        if (other.gameObject.CompareTag("Arbusto"))
+        {
+            velocidad *= 0.5f;
+        }
+
+    }
+
+    // Método en el que cuando salga fuera del collider restaura su velocidad.
+    void OnTriggerExit2D(Collider2D other)
+    {
+
+        if (other.gameObject.CompareTag("Arbusto"))
+        {
+            velocidad = velocidadOriginal;
         }
     }
 

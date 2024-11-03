@@ -10,5 +10,6 @@ public class SceneController : MonoBehaviour
    public void cargarScena(string nameScene)
    {
     SceneManager.LoadScene(nameScene);
+    GameManager.instancia.quitarVidaJugador();
    }
 }
