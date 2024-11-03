@@ -13,7 +13,7 @@ public class GameManagerExit : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 
 #else
-            Application.Quit().
+            Application.Quit();
         
 #endif
     }
