@@ -199,3 +199,4 @@ MonoBehaviour:
   tiempoQuieto: 3
   knockBackForce: 15
   knockBackDuration: 0.7
+  sonidoSlime: {fileID: 8300000, guid: 352dcd55631963841b9199d2aae821a9, type: 3}

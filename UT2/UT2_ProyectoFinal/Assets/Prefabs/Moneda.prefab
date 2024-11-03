@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valor: 1
-  gameManager: {fileID: 0}
+  sonidoMoneda: {fileID: 8300000, guid: 8e6aab5e67210d644a43b38c8e14d65d, type: 3}
 --- !u!61 &564283304928751494
 BoxCollider2D:
   m_ObjectHideFlags: 0

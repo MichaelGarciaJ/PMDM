@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded { get; private set; }
     public bool isRunning { get; private set; }
     private float velocidadOriginal;
+    public AudioClip sonidoSaltar;
 
     void Start()
     {
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && hit.collider != null)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            AudioManager.instancia.reproducirSonido(sonidoSaltar);
             animator.SetBool("isGrounded", false); // Activa la animación de salto
             isGrounded = false;
         }

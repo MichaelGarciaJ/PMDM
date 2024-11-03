@@ -8,6 +8,7 @@ public class PlayerShotController : MonoBehaviour
     public GameObject bala;
     public Transform controladorDisparo;
     public float tiempoDisparo;
+    public AudioClip sonidoDisparo;
     private float ultimoDisparo;
     Animator animator;
     private PlayerController playerController; 
@@ -34,6 +35,7 @@ public class PlayerShotController : MonoBehaviour
         if (Time.time > ultimoDisparo + tiempoDisparo)
         {
             animator.SetTrigger("shoot");
+            AudioManager.instancia.reproducirSonido(sonidoDisparo);
             Instantiate(bala, controladorDisparo.position, controladorDisparo.rotation);
 
             ultimoDisparo = Time.time;
