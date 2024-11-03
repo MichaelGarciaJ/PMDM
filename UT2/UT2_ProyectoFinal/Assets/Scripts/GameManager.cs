@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    void OnDisable(){
+    void OnDisable()
+    {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
@@ -64,7 +65,8 @@ public class GameManager : MonoBehaviour
     }
 
     // Método en el que se encarga de pausar el juego.
-    public void pausarJuego(){
+    public void pausarJuego()
+    {
 
         botonPausa.SetActive(false);
         botonContinuar.SetActive(true);
@@ -72,15 +74,16 @@ public class GameManager : MonoBehaviour
     }
 
     // Método en el que se encarga de renaudar el juego.
-    public void renaudarJuego(){
-
+    public void renaudarJuego()
+    {
         botonPausa.SetActive(true);
         botonContinuar.SetActive(false);
         Time.timeScale = 1f;
     }
 
     // Método en el que se encarga de reiniciar la escena.
-    public void reiniciarEscena(){
+    public void reiniciarEscena()
+    {
 
         Time.timeScale = 1;
 
@@ -91,15 +94,16 @@ public class GameManager : MonoBehaviour
     }
 
     // Método que se encarga de salir del juego.
-    public void salirJuego() {
+    public void salirJuego()
+    {
 
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
 
-        #else 
+#else
             Application.Quit().
         
-        #endif
+#endif
     }
 
     // Método que suma las monedas que recoge.
@@ -107,9 +111,14 @@ public class GameManager : MonoBehaviour
     {
         monedas += monedasAsumar;
 
-        if(SceneManager.GetActiveScene().name == "Nivel_1" && monedas == 10){
+        if (SceneManager.GetActiveScene().name == "Nivel_1" && monedas == 10)
+        {
 
             SceneManager.LoadScene("Nivel_2");
+        }
+        else if (SceneManager.GetActiveScene().name == "Nivel_2" && monedas == 27)
+        {
+            SceneManager.LoadScene("VolverJugar");
         }
     }
 
@@ -160,7 +169,8 @@ public class GameManager : MonoBehaviour
     }
 
     // Método en el que se asigna los corazones.
-    void asignarCorazones(){
+    void asignarCorazones()
+    {
 
         GameObject[] corazonesObjetos = GameObject.FindGameObjectsWithTag("Corazon");
 
