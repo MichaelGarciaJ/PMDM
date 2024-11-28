@@ -284,6 +284,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ddb95ed53876a924694d8ce9c41edcab, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2263255966854411132, guid: ddb95ed53876a924694d8ce9c41edcab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.4065302
@@ -452,7 +456,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 64
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1796346279983407290
 CapsuleCollider:
@@ -489,5 +493,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890f43852a1936b45ae9e7c68c2bc41f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 5
-  fuerzaSalto: 5
+  velocidad: 2
+  fuerzaSalto: 7

@@ -14,6 +14,7 @@ public class JugadorController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class JugadorController : MonoBehaviour
         procesarMovimiento();
     }
 
-    // Método en el que gestionamos el movimiento.
+    // Método en el que gestionamos el movimiento y salto.
     void procesarMovimiento()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -41,15 +42,16 @@ public class JugadorController : MonoBehaviour
             rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
         }
 
-        gestionarMovimiento(horizontal);
+
+        gestionarMovimiento(horizontal, vertical);
 
     }
 
     // Método en el que se verifica si el jugador esta quieto o no (Para la animación).
-    void gestionarMovimiento(float inputMovimiento)
+    void gestionarMovimiento(float inputMovimientoH, float inputMovimientoV)
     {
 
-        if (inputMovimiento != 0) // Está en movimiento.
+        if (inputMovimientoH != 0 || inputMovimientoV != 0) // Está en movimiento.
         {
             animator.SetBool("enMovimiento", true);
             isRunning = false;
