@@ -5,8 +5,8 @@ using UnityEngine;
 public class JugadorController : MonoBehaviour
 {
 
-    public float velocidad = 5f;
-    public float fuerzaSalto = 5f;
+    public float velocidad;
+    public float fuerzaSalto;
     private Rigidbody rb;
     Animator animator;
     public bool isRunning { get; private set; }
