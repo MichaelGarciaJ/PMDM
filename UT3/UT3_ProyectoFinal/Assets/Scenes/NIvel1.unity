@@ -2778,7 +2778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingMode: 1
+  m_BindingMode: 5
   m_FollowOffset: {x: 0, y: 8, z: -20}
   m_XDamping: 1
   m_YDamping: 1
@@ -5938,10 +5938,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: --- HUD ---
       objectReference: {fileID: 0}
+    - target: {fileID: 2768047449270636846, guid: e4acc303de68344468646ce50bf90492, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5282817264774763765, guid: e4acc303de68344468646ce50bf90492, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 5877976066400328659, guid: e4acc303de68344468646ce50bf90492, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6265248265242895420, guid: e4acc303de68344468646ce50bf90492, type: 3}
       propertyPath: m_Pivot.x
       value: 0

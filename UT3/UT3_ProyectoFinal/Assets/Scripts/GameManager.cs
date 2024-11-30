@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Nivel1" || scene.name == "Nivel2")
+        if (scene.name == "Nivel1" || scene.name == "Nivel2" || scene.name == "Nivel3" || scene.name == "Exterior")
         {
             asignarCorazones();
             actualizarCorazones();
@@ -109,6 +109,46 @@ public class GameManager : MonoBehaviour
             corazones[i] = corazonesObjetos[i].GetComponent<Image>();
         }
 
+    }
+
+    // Método en el que se encarga de reiniciar la escena.
+    public void reiniciarEscena()
+    {
+
+        Time.timeScale = 1;
+
+        vidasJugador = vidasTotales;
+        monedas = 0;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // Método que quita vida al jugador;
+    public void quitarVidaJugador()
+    {
+
+        vidasJugador--;
+        actualizarCorazones();
+
+        if (vidasJugador <= 0)
+        {
+            GameObject hud = GameObject.Find("--- HUD ---");
+            GameObject panelMuerte = hud.transform.Find("Muerte").gameObject;
+            panelMuerte.SetActive(true);
+
+            // Asocio las funciones Reiniciar y Salir a cada bóton.
+            Button reiniciar = panelMuerte.transform.Find("btnReiniciar").GetComponent<Button>();
+            Button salir = panelMuerte.transform.Find("btnSalir").GetComponent<Button>();
+            reiniciar.onClick.AddListener(GameManager.instancia.reiniciarEscena);
+            salir.onClick.AddListener(GameManager.instancia.salirJuego);
+
+            Time.timeScale = 0f;
+
+            // Desactivamos los botones de Pausa y Continuar.
+            botonPausa.SetActive(false);
+            botonContinuar.SetActive(false);
+
+        }
     }
 
     // Método que se encarga de salir del juego.
