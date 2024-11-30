@@ -129,7 +129,10 @@ public class GameManager : MonoBehaviour
 
         vidasJugador--;
         actualizarCorazones();
+    }
 
+    public void mostrarPantallaMuerte()
+    {
         if (vidasJugador <= 0)
         {
             GameObject hud = GameObject.Find("--- HUD ---");
