@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class JugadorController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class JugadorController : MonoBehaviour
     public float fuerzaSalto;
     private Rigidbody rb;
     Animator animator;
+    public UnityEvent loadNewScene;
     public bool isRunning { get; private set; }
 
     void Start()
@@ -61,6 +63,23 @@ public class JugadorController : MonoBehaviour
             animator.SetBool("enMovimiento", false);
             isRunning = true;
         }
+    }
+
+    // Método que si tocas el objeto Collider2D saldrá la animación de muerte.
+    void OnTriggerEnter(Collider other)
+    {
+
+        if (other.gameObject.CompareTag("Vacio_Muerte"))
+        {
+            animator.SetTrigger("Champi_Dead");
+        }
+
+    }
+
+    // Método que te carga la escena / muerte.
+    public void ldScene()
+    {
+        loadNewScene.Invoke();
     }
 
 
