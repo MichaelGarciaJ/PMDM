@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Nivel1" || scene.name == "Nivel2" || scene.name == "Nivel3" || scene.name == "Exterior")
+        if (scene.name == "Nivel1" || scene.name == "Nivel2" || scene.name == "Exterior")
         {
             asignarCorazones();
             actualizarCorazones();
@@ -126,7 +126,6 @@ public class GameManager : MonoBehaviour
     // Método que quita vida al jugador;
     public void quitarVidaJugador()
     {
-
         vidasJugador--;
         actualizarCorazones();
     }

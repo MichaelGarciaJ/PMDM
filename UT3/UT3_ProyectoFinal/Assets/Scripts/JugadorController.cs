@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class JugadorController : MonoBehaviour
 {
@@ -72,6 +74,16 @@ public class JugadorController : MonoBehaviour
         if (other.gameObject.CompareTag("Vacio_Muerte"))
         {
             animator.SetTrigger("Champi_Dead");
+        }
+
+        if (other.CompareTag("Portal"))
+        {
+            SceneManager.LoadScene("Nivel2");
+        }
+
+        if (other.CompareTag("Portal1"))
+        {
+            SceneManager.LoadScene("Exterior");
         }
 
     }
