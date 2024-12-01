@@ -20,10 +20,12 @@ public class HUDController : MonoBehaviour
             Button botonContinuar = botonesContenedor.transform.Find("Continuar").GetComponent<Button>();
             botonContinuar.onClick.AddListener(GameManager.instancia.renaudarJuego);
 
+            Button botonsalir = GameObject.Find("Salir").GetComponent<Button>();
+            botonsalir.onClick.AddListener(GameManager.instancia.salirJuego);
+    
         }
         else
         {
-
             Debug.LogError("GameManger no encontrado");
         }
 
