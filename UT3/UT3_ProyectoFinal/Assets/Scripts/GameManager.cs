@@ -154,6 +154,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Método que suma las monedas que recoge.
+    public void SumarMonedas(int monedasAsumar)
+    {
+        monedas += monedasAsumar;
+    }
+
     // Método que se encarga de salir del juego.
     public void salirJuego()
     {
